@@ -7,12 +7,17 @@ import java.lang.String;
 import java.util.Date;
 import javax.persistence.*;
 
-@Entity(name = "STUDENT")
+@Entity
+@Table(name = "STUDENT")
+@NamedQuery(name = StudentDO.FIND_ALL_STUDENT, query="SELECT s FROM StudentDO s")
 public class StudentDO implements Serializable {
 
 	private static final long serialVersionUID = -7263912702114994562L;
+	
+	public static final String FIND_ALL_STUDENT = "StudentDO.getAll";
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "ID")
 	private int id;
 	
