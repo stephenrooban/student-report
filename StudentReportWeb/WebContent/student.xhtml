@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<title>Student Report</title>
+</h:head> 
+
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">
+				Student Report
+			</div>
+		</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<h:form styleClass="form-horizontal">
+				<div class="form-group">
+					<h:outputLabel value="Student ID" styleClass="control-label col-sm-2"/>
+					<div class="col-sm-10">
+						<h:inputText value="#{studentMBean.studentId}" styleClass="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<h:outputLabel value="First Name" styleClass="control-label col-sm-2"/>
+					<div class="col-sm-10">
+						<h:inputText value="#{studentMBean.firstName}" styleClass="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<h:outputLabel value="Last Name" styleClass="control-label col-sm-2"/>
+					<div class="col-sm-10">
+						<h:inputText value="#{studentMBean.lastName}" styleClass="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<h:outputLabel value="Standard" styleClass="control-label col-sm-2"/>
+					<div class="col-sm-10">
+						<h:inputText value="#{studentMBean.standard}" styleClass="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<h:outputLabel value="Age" styleClass="control-label col-sm-2"/>
+					<div class="col-sm-10">
+						<h:inputText value="#{studentMBean.age}" styleClass="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<h:outputLabel value="Branch" styleClass="control-label col-sm-2"/>
+					<div class="col-sm-10">
+						<h:inputText value="#{studentMBean.branch}" styleClass="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<h:outputLabel value="Percent" styleClass="control-label col-sm-2"/>
+					<div class="col-sm-10">
+						<h:inputText value="#{studentMBean.percent}" styleClass="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<h:outputLabel value="Joined Date" styleClass="control-label col-sm-2"/>
+					<div class="col-sm-10">
+						<h:inputText id="InpDate" value="#{studentMBean.joinedDate}" styleClass="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<h:outputLabel value="Is Passed" styleClass="control-label col-sm-2"/>
+					<div class="col-sm-10">
+						<h:inputText value="#{studentMBean.isPassed}" styleClass="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div>
+						<c:choose class="col-sm-offset-2 col-sm-10">
+							<c:when test="#{studentMBean.id > 0}">
+								<h:inputHidden value="#{studentMBean.id}" />
+								<h:commandButton action="#{studentMBean.updateStudent()}" value="Update" styleClass="btn btn-default"/>
+							</c:when>
+							<c:otherwise>
+								<h:commandButton action="#{studentMBean.createStudent()}" value="Create" styleClass="btn btn-default"/>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</h:form>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Student Id</th>
+						<th>Standard</th>
+						<th>Age</th>
+						<th>Branch</th>
+						<th>Percent</th>
+						<th>Joined Date</th>
+						<th>Is Passed</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<ui:repeat var="stud" value="#{studentMB.getAllStudents()}">
+					<tr>
+						<td>#{stud.firstName} #{stud.lastName}</td>
+						<td>#{stud.studentId}</td>
+						<td>#{stud.standard}</td>
+						<td>#{stud.age}</td>
+						<td>#{stud.branch}</td>
+						<td>#{stud.percent}</td>
+						<td>#{stud.joinedDate}</td>
+						<td>#{stud.isPassed}</td>
+						<td>
+							<h:form>
+								<h:commandLink action="#{studentMBean.getStudent(stud.id)}" value="Edit" />
+								<i class="glyphicon glyphicon-edit"></i>
+							</h:form>
+						</td>
+						<td>
+							<h:form>
+								<h:commandLink action="#{studentMBean.deleteStudent(stud.id)}" value="Delete" />
+								<i class="glyphicon glyphicon-trash"></i>
+							</h:form>					
+						</td>
+					</tr>
+				</ui:repeat>
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+<script>
+	$("#InpDate").datepicker({
+   		showOn: "button",
+   		buttonImage: "../images/calendarIcon.png",
+   		buttonImageOnly: true
+		}).mask("99/99/9999");
+</script>
+</h:body>
+</html>
